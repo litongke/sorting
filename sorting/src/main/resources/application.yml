@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: chufinfo-business-sorting
+  # 环境 dev|prod
+  profiles:
+    active: dev
+
+

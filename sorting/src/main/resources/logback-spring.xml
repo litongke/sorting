@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="LOG_HOME" value="${user.home}/log"/>
+	<substitutionProperty name="log.base" value="sorting"/>
+	<jmxConfigurator/>
+	<appender class="ch.qos.logback.core.ConsoleAppender" name="stdout">
+		<layout class="ch.qos.logback.classic.PatternLayout">s
+			<pattern>%date{yyyy-MM-dd HH:mm:ss}|%yellow(%-5level)|%blue([%thread])|%blue(%file:%line)|%green(%logger)|%cyan(%msg%n)
+			</pattern>
+		</layout>
+	</appender>
+	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="logfile">
+		<File>${LOG_HOME}/${log.base}.log</File>
+		<append>true</append>
+		<encoder>
+			<pattern>
+				[%date{yyyy-MM-dd HH:mm:ss.SSS}] %X{logthreadId} %-5level %logger{80} %method %line - %msg%n
+			</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}${file.separator}%d{yyyy-MM-dd}${file.separator}%d{yyyy-MM-dd}.%i.log.zip
+			</fileNamePattern>
+			<maxHistory>7</maxHistory>
+			<maxFileSize>20MB</maxFileSize>
+		</rollingPolicy>
+	</appender>
+	<!--myibatis log configure-->
+	<logger name="com.apache.ibatis" level="TRACE"/>
+	<logger name="java.sql.Connection" level="DEBUG"/>
+	<logger name="java.sql.Statement" level="DEBUG"/>
+	<logger name="java.sql.PreparedStatement" level="DEBUG"/>
+	<root>
+		<level value="info"/>
+		<appender-ref ref="stdout"/>
+		<appender-ref ref="logfile"/>
+	</root>
+</configuration>

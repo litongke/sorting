@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chufinfo.sorting.mapper.primary.UserFjkMapper">
+    <insert id="insertBatchUserFjk" parameterType="java.util.List">
+        insert into user_fjk (user_id,fjk_id) values
+        <foreach collection="userFjkList" item="userFjk"  separator=",">
+            (#{userFjk.userId},#{userFjk.fjkId})
+        </foreach>
+    </insert>
+</mapper>

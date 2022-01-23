@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chufinfo.sorting.mapper.primary.BbmxMapper">
+
+    <select id="getManageList" resultType="com.chufinfo.sorting.entity.responseParam.BbmxResultParam">
+        select t.*,u1.real_name as smUserName,u2.real_name as jjUserName from bbmx t
+        left join `user` u1 on t.sm_user_id=u1.id
+        left join `user` u2 on t.jj_user_id=u2.id
+        where t.del_flag = 0
+        <if test="queryParam.beginTime!=null">
+            and t.sm_time>= #{queryParam.beginTime}
+        </if>
+        <if test="queryParam.endTime!=null">
+            and t.sm_time &lt; #{queryParam.endTime}
+        </if>
+        <if test="queryParam.txm !=null and queryParam.txm !=''">
+            and t.txm = #{queryParam.txm}
+        </if>
+        <if test="queryParam.fjkId !=null and queryParam.fjkId !=''">
+            and t.fjk_id = #{queryParam.fjkId}
+        </if>
+        <if test="queryParam.sgjBh !=null and queryParam.sgjBh !=''">
+            and t.sgj_bh = #{queryParam.sgjBh}
+        </if>
+        <if test="queryParam.status!=null">
+            and t.`status` = #{queryParam.status}
+        </if>
+        <if test="queryParam.hzxm !=null and queryParam.hzxm !=''">
+            and t.hzxm = #{queryParam.hzxm}
+        </if>
+    </select>
+    <select id="getSgjBhList" resultType="com.chufinfo.sorting.entity.vo.DictVo">
+        select p.id as bm,p.sgj_bh as bmValue from sjxx t
+        inner join sgj p on t.sgj_id=p.id
+        where 1=1
+        <if test="fjkId!=null">
+            and t.fjk_id= #{fjkId}
+        </if>
+        <if test="userId!=null">
+            and t.user_id= #{userId}
+        </if>
+        <if test="createTime!=null">
+            and t.create_time >= #{createTime}
+        </if>
+        group by t.sgj_id
+    </select>
+    <select id="getJobCountStatistics"
+            resultType="com.chufinfo.sorting.entity.responseParam.JobCountStatResultParam">
+        select t.sm_user_id,u.real_name as `name`, COUNT(t.id) AS jobCount
+        from bbmx t
+        left join `user` u on t.sm_user_id=u.id
+        where t.del_flag=0
+        <if test="queryParam.beginTime!=null">
+            and t.sm_time>= #{queryParam.beginTime}
+        </if>
+        <if test="queryParam.endTime!=null">
+            and t.sm_time &lt; #{queryParam.endTime}
+        </if>
+        <if test="queryParam.userId!=null">
+            and t.sm_user_id = #{queryParam.userId}
+        </if>
+        GROUP BY t.sm_user_id
+    </select>
+</mapper>

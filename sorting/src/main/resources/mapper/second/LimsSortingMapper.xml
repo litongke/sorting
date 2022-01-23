@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chufinfo.sorting.mapper.second.LimsSortingMapper">
+
+
+
+
+
+
+    <select id="getYBXXByTxm" resultType="com.chufinfo.sorting.entity.param.YBXXResultParam">
+        SELECT keyid,txm,zyz_bm,zyz,hzxm,jymdbm,jymdmc,jgdm,jigmc,createtime FROM dbo.V_LIMS_SORTING
+        WHERE txm = #{txm}
+    </select>
+
+
+
+</mapper>

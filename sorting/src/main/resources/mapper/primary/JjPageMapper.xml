@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chufinfo.sorting.mapper.primary.JjPageMapper">
+    <update id="updateBatchSjxx" parameterType="com.chufinfo.sorting.entity.param.JjXjSgjParam">
+        update sjxx  set `status` = 2,jj_user_id = #{jjUserId}  where  `status` =1
+        and id in (
+        <foreach collection="jjIds" item="id"  separator=",">
+              #{id}
+        </foreach>
+        )
+    </update>
+    <update id="updateBatchBbmx" parameterType="com.chufinfo.sorting.entity.param.JjXjSgjParam">
+        update bbmx  set `status` = 1,jj_user_id = #{jjUserId},jj_time=SYSDATE()  where  `status` =0
+        and  sj_id in (
+        <foreach collection="jjIds" item="sjid"  separator=",">
+            #{sjid}
+        </foreach> )
+    </update>
+</mapper>

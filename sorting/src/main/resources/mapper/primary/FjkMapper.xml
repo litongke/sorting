@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chufinfo.sorting.mapper.primary.FjkMapper">
+    <select id="getQyList" resultType="com.chufinfo.sorting.entity.vo.FjkVo">
+        SELECT id AS fjk_id,`name` AS fjk_mc,color FROM fjk WHERE del_flag=0 AND `status`=0
+    </select>
+    <select id="getManageList" resultType="com.chufinfo.sorting.model.Fjk">
+        select t.*,p.zyz from fjk t
+        left join jymdbm p ON t.id=p.fjk_id
+        where t.del_flag=0
+        GROUP BY p.zyz
+    </select>
+</mapper>
